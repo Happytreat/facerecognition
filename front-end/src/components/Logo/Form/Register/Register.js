@@ -1,5 +1,7 @@
 import React from "react"
 
+// TODO: Check that fields are non-empty
+
 class Register extends React.Component {
 	constructor(props) {
 		super(props)
