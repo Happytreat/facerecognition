@@ -4,6 +4,7 @@ import Clarifai from "clarifai"
 import Navigation from "./components/Navigation/Navigation"
 import Logo from "./components/Logo/Logo"
 import Rank from "./components/Rank/Rank"
+import Form from "./components/Form/Form"
 import Signin from "./components/Form/Signin/Signin"
 import Register from "./components/Form/Register/Register"
 import FaceRecognition from "./components/FaceRecognition/FaceRecognition"
@@ -158,7 +159,20 @@ class App extends Component {
 				) : route === "signin" ? (
 					<Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
 				) : (
-					<Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
+					<Register
+						loadUser={this.loadUser}
+						onRouteChange={this.onRouteChange}
+						render={({ title, state, inputLabels, inputMethods, buttonLabels, buttonMethods }) => (
+							<Form
+								title={title}
+								state={state}
+								inputLabels={inputLabels}
+								inputMethods={inputMethods}
+								buttonLabels={buttonLabels}
+								buttonMethods={buttonMethods}
+							/>
+						)}
+					/>
 				)}
 			</div>
 		)
