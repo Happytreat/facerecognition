@@ -20,6 +20,7 @@ import React from "react"
 const Form = ({ title, state, inputLabels, inputMethods, buttonLabels, buttonMethods }) => {
 	let inputFields = []
 	let buttons = []
+	let keyIndex = 0
 	return (
 		<article className='br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center'>
 			<main className='pa4 black-80'>
@@ -28,7 +29,7 @@ const Form = ({ title, state, inputLabels, inputMethods, buttonLabels, buttonMet
 						<legend className='f1 fw6 ph0 mh0'>{`${title}`}</legend>
 						{inputLabels.forEach((label, index) => {
 							inputFields.push(
-								<div className='mt3'>
+								<div className='mt3' key={keyIndex}>
 									<label className='db fw6 lh-copy f6' htmlFor={`${label}`}>
 										{label}
 									</label>
@@ -39,13 +40,14 @@ const Form = ({ title, state, inputLabels, inputMethods, buttonLabels, buttonMet
 									/>
 								</div>
 							)
+							keyIndex++
 						})}
 						{inputFields}
 					</fieldset>
 					{buttonLabels.forEach((label, index) => {
 						if (label !== "Register") {
 							buttons.push(
-								<div className=''>
+								<div className={label} key={keyIndex}>
 									<input
 										onClick={buttonMethods[index]}
 										className='b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib'
@@ -56,13 +58,14 @@ const Form = ({ title, state, inputLabels, inputMethods, buttonLabels, buttonMet
 							)
 						} else {
 							buttons.push(
-								<div className='lh-copy mt3'>
+								<div className='lh-copy mt3' key={keyIndex}>
 									<p onClick={buttonMethods[index]} className='f6 link dim black db pointer'>
 										Register
 									</p>
 								</div>
 							)
 						}
+						keyIndex++
 					})}
 					{buttons}
 				</div>
