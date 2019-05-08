@@ -1,15 +1,16 @@
 import React from "react"
 // TODO: Check that fields are non-empty
 
+const initialState = {
+	email: "",
+	password: "",
+	name: ""
+}
+
 class Register extends React.Component {
 	constructor(props) {
 		super(props)
-
-		this.state = {
-			email: "",
-			password: "",
-			name: ""
-		}
+		this.state = initialState
 	}
 
 	onNameChange = event => {
@@ -40,6 +41,7 @@ class Register extends React.Component {
 					console.log(user)
 					this.props.loadUser(user)
 					this.props.onRouteChange("home")
+					this.setState({ initialState })
 				}
 			})
 	}

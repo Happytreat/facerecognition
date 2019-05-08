@@ -8,7 +8,6 @@ const initialState = {
 class Signin extends React.Component {
 	constructor(props) {
 		super(props)
-
 		this.state = initialState
 	}
 
@@ -37,6 +36,7 @@ class Signin extends React.Component {
 					console.log("User id", user.id)
 					this.props.loadUser(user)
 					this.props.onRouteChange("home")
+					this.setState({ initialState })
 				}
 			})
 	}
