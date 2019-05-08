@@ -1,4 +1,4 @@
-const handleProfile = (req, res, db) => {
+const handleProfileGet = (req, res, db) => {
 	const { id } = req.params
 	db.select("*")
 		.from("users")
@@ -8,5 +8,5 @@ const handleProfile = (req, res, db) => {
 		})
 }
 module.exports = {
-	handleProfile: handleProfile
+	handleProfileGet: handleProfileGet
 }
