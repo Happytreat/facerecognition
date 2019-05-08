@@ -2,9 +2,19 @@ const express = require("express")
 const bodyParser = require("body-parser")
 const bcrypt = require("bcrypt-nodejs")
 const cors = require("cors")
+const knex = require("knex")
+
+const db = knex({
+	client: "pg",
+	connection: {
+		host: "127.0.0.1",
+		user: "postgres",
+		password: "test",
+		database: "face-recognition"
+	}
+})
 
 const app = express()
-
 app.use(bodyParser.json())
 app.use(cors())
 
@@ -54,35 +64,33 @@ app.post("/signin", (req, res) => {
 app.post("/register", (req, res) => {
 	const { email, name, password } = req.body
 	bcrypt.hash(password, null, null, function(err, hash) {
-		console.log(hash)
+		//console.log(hash)
 	})
-	database.users.push({
-		id: "125",
-		name: name,
-		email: email,
-		entries: 0,
-		joined: new Date()
-	})
-	res.json(database.users[database.users.length - 1])
+	db("users")
+		.returning("*")
+		.insert({
+			email: email,
+			name: name,
+			joined: new Date()
+		})
+		.then(user => {
+			console.log(user[0])
+			res.json(user[0])
+		})
+		.catch(err => res.status(400).json("Unable to register."))
 })
-
-const findIdThenPerform = (res, id, returnValue, f) => {
-	let found = false
-	database.users.forEach(user => {
-		if (user.id === id) {
-			found = true
-			f()
-			return res.json(returnValue)
-		}
-	})
-	if (!found) {
-		res.status(404).json("No such user")
-	}
-}
 
 app.get("/profile/:id", (req, res) => {
 	const { id } = req.params
-	findIdThenPerform(res, id, database.users, () => {})
+	db.select("*")
+		.from("users")
+		.where({ id })
+		.then(user => {
+			user.length ? res.json(user[0]) : res.status(404).json("No such user")
+		})
+	// if (!found) {
+	// 	res.status(404).json("No such user")
+	// }
 })
 
 app.put("/image", (req, res) => {
@@ -103,12 +111,3 @@ app.put("/image", (req, res) => {
 app.listen(3001, () => {
 	console.log("App is running on port 3001.")
 })
-
-/* 
-/ --> res = this is working
-/signin --> POST = success/fail
-/register --> POST = user
-/profile/:userId --> GET = user
-/image --> PUT  --> user
-
-*/
