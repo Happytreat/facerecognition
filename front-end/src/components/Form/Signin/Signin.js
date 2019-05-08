@@ -42,7 +42,6 @@ class Signin extends React.Component {
 	render() {
 		return this.props.render({
 			title: "Sign In",
-			state: this.state,
 			inputLabels: ["Email", "Password"],
 			inputMethods: [this.onEmailChange, this.onPasswordChange],
 			buttonLabels: ["Sign In", "Register"],

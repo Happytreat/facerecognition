@@ -163,10 +163,9 @@ class App extends Component {
 					<Signin
 						loadUser={this.loadUser}
 						onRouteChange={this.onRouteChange}
-						render={({ title, state, inputLabels, inputMethods, buttonLabels, buttonMethods }) => (
+						render={({ title, inputLabels, inputMethods, buttonLabels, buttonMethods }) => (
 							<Form
 								title={title}
-								state={state}
 								inputLabels={inputLabels}
 								inputMethods={inputMethods}
 								buttonLabels={buttonLabels}
@@ -178,10 +177,9 @@ class App extends Component {
 					<Register
 						loadUser={this.loadUser}
 						onRouteChange={this.onRouteChange}
-						render={({ title, state, inputLabels, inputMethods, buttonLabels, buttonMethods }) => (
+						render={({ title, inputLabels, inputMethods, buttonLabels, buttonMethods }) => (
 							<Form
 								title={title}
-								state={state}
 								inputLabels={inputLabels}
 								inputMethods={inputMethods}
 								buttonLabels={buttonLabels}

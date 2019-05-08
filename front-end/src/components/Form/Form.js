@@ -1,23 +1,6 @@
 import React from "react"
 
-// const inputFields = (labels, methods) => {
-//   labels.forEach((label, index) => {
-// 		return (
-// 			<div className='mt3'>
-// 				<label className='db fw6 lh-copy f6' htmlFor={`${label}`}>
-// 					{label}
-// 				</label>
-// 				<input
-// 					onChange={methods[index]}
-// 					className='pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100'
-// 					type='text'
-// 				/>
-// 			</div>
-// 		)
-// 	})
-// }
-
-const Form = ({ title, state, inputLabels, inputMethods, buttonLabels, buttonMethods }) => {
+const Form = ({ title, inputLabels, inputMethods, buttonLabels, buttonMethods }) => {
 	let inputFields = []
 	let buttons = []
 	let keyIndex = 0

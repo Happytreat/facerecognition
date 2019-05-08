@@ -49,7 +49,6 @@ class Register extends React.Component {
 	render() {
 		return this.props.render({
 			title: "Register",
-			state: this.state,
 			inputLabels: ["Name", "Email", "Password"],
 			inputMethods: [this.onNameChange, this.onEmailChange, this.onPasswordChange],
 			buttonLabels: ["Sign In"],
