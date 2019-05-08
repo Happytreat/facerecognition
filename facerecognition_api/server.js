@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt-nodejs")
 const cors = require("cors")
 const knex = require("knex")
 const register = require("./controllers/register")
+const signin = require("./controllers/signin")
 
 //TODO: Get rid of database empty account
 //TODO: Restrict Empty string inputs
@@ -27,24 +28,7 @@ app.get("/", (req, res) => {
 })
 
 app.post("/signin", (req, res) => {
-	const { email, password } = req.body
-	db.select("email", "hash")
-		.from("login")
-		.where("email", "=", email)
-		.then(data => {
-			const isValid = bcrypt.compareSync(password, data[0].hash)
-			isValid
-				? db
-						.select("*")
-						.from("users")
-						.where("email", "=", email)
-						.then(user => {
-							res.json(user[0])
-						})
-						.catch(err => res.status(400).json("Unable to get user."))
-				: res.status(400).json("Wrong credentials.")
-		})
-		.catch(err => res.status(400).json("Wrong credentials."))
+	signin.handleSignin(req, res, db, bcrypt)
 })
 
 app.post("/register", (req, res) => {
