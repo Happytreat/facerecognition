@@ -41,7 +41,6 @@ class Register extends React.Component {
 					console.log(user)
 					this.props.loadUser(user)
 					this.props.onRouteChange("home")
-					this.setState({ initialState })
 				}
 			})
 	}
