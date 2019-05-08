@@ -35,7 +35,7 @@ const Form = ({ title, state, inputLabels, inputMethods, buttonLabels, buttonMet
 									<input
 										onChange={inputMethods[index]}
 										className='pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100'
-										type='text'
+										type={label}
 									/>
 								</div>
 							)
