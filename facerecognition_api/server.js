@@ -4,6 +4,9 @@ const bcrypt = require("bcrypt-nodejs")
 const cors = require("cors")
 const knex = require("knex")
 
+//TODO: Get rid of database empty account
+//TODO: Restrict Empty string inputs
+
 const db = knex({
 	client: "pg",
 	connection: {
@@ -18,36 +21,8 @@ const app = express()
 app.use(bodyParser.json())
 app.use(cors())
 
-const database = {
-	users: [
-		{
-			id: "123",
-			name: "John",
-			email: "john@gmail.com",
-			password: "cookies",
-			entries: 0,
-			joined: new Date()
-		},
-		{
-			id: "124",
-			name: "Sally",
-			email: "sally@gmail.com",
-			password: "sally",
-			entries: 0,
-			joined: new Date()
-		}
-	],
-	login: [
-		{
-			id: "987",
-			hash: "",
-			email: "john@gmail.com"
-		}
-	]
-}
-
 app.get("/", (req, res) => {
-	res.send(database.users)
+	res.send("This is the working server.")
 })
 
 app.post("/signin", (req, res) => {
@@ -57,7 +32,6 @@ app.post("/signin", (req, res) => {
 		.where("email", "=", email)
 		.then(data => {
 			const isValid = bcrypt.compareSync(password, data[0].hash)
-
 			isValid
 				? db
 						.select("*")
