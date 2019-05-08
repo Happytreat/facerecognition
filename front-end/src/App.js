@@ -1,6 +1,5 @@
 import React, { Component } from "react"
 import Particles from "react-particles-js"
-import Clarifai from "clarifai"
 import Navigation from "./components/Navigation/Navigation"
 import Logo from "./components/Logo/Logo"
 import Rank from "./components/Rank/Rank"
@@ -10,11 +9,6 @@ import Register from "./components/Form/Register/Register"
 import FaceRecognition from "./components/FaceRecognition/FaceRecognition"
 import ImageLinkForm from "./components/ImageLinkForm/ImageLinkForm"
 import "./App.css"
-
-// initialize with your api key. This will also work in your browser via http://browserify.org/
-const app = new Clarifai.App({
-	apiKey: "f43b0998b19848339cf1346e1d837378"
-})
 
 const particleOptions = {
 	particles: {
@@ -108,11 +102,19 @@ class App extends Component {
 
 	onPictureSubmit = () => {
 		this.setState({ imageUrl: this.state.input })
-		app.models
-			.predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
+
+		fetch("https://murmuring-plateau-15762.herokuapp.com/imageurl", {
+			method: "post",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({
+				input: this.state.input
+			})
+		})
+			.then(response => response.json())
 			.then(response => {
+				console.log("Clarifai response", response)
 				if (response) {
-					fetch("http://localhost:3001/image", {
+					fetch("https://murmuring-plateau-15762.herokuapp.com/image", {
 						method: "put",
 						headers: { "Content-Type": "application/json" },
 						body: JSON.stringify({
