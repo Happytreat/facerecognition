@@ -8,9 +8,6 @@ const signin = require("./controllers/signin")
 const profile = require("./controllers/profile")
 const image = require("./controllers/image")
 
-//TODO: Get rid of database empty account
-//TODO: Restrict Empty string inputs
-
 const db = knex({
 	client: "pg",
 	connection: {
