@@ -43,16 +43,26 @@ const Form = ({ title, state, inputLabels, inputMethods, buttonLabels, buttonMet
 						{inputFields}
 					</fieldset>
 					{buttonLabels.forEach((label, index) => {
-						buttons.push(
-							<div className=''>
-								<input
-									onClick={buttonMethods[index]}
-									className='b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib'
-									type='submit'
-									value={label}
-								/>
-							</div>
-						)
+						if (label !== "Register") {
+							buttons.push(
+								<div className=''>
+									<input
+										onClick={buttonMethods[index]}
+										className='b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib'
+										type='submit'
+										value={label}
+									/>
+								</div>
+							)
+						} else {
+							buttons.push(
+								<div className='lh-copy mt3'>
+									<p onClick={buttonMethods[index]} className='f6 link dim black db pointer'>
+										Register
+									</p>
+								</div>
+							)
+						}
 					})}
 					{buttons}
 				</div>

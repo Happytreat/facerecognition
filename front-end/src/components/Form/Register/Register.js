@@ -53,7 +53,6 @@ class Register extends React.Component {
 			buttonLabels: ["Sign In"],
 			buttonMethods: [this.onSubmitSignIn]
 		})
-		//return <Form title='Register' />
 	}
 }
 
