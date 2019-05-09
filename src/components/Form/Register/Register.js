@@ -1,61 +1,61 @@
 import React from "react"
+import { connect } from "react-redux"
+import { setEmailField, setPasswordField, setNameField } from "../../../actions"
 
-const initialState = {
-	email: "",
-	password: "",
-	name: ""
+const mapStateToProps = state => {
+	return {
+		emailInput: state.emailInput,
+		passwordInput: state.passwordInput,
+		nameInput: state.nameInput
+	}
+}
+
+const mapDispatchToProps = dispatch => {
+	return {
+		onEmailChange: event => dispatch(setEmailField(event.target.value)),
+		onPasswordChange: event => dispatch(setPasswordField(event.target.value)),
+		onNameChange: event => dispatch(setNameField(event.target.value))
+	}
 }
 
 class Register extends React.Component {
-	constructor(props) {
-		super(props)
-		this.state = initialState
-	}
-
-	onNameChange = event => {
-		this.setState({ name: event.target.value })
-	}
-
-	onEmailChange = event => {
-		this.setState({ email: event.target.value })
-	}
-
-	onPasswordChange = event => {
-		this.setState({ password: event.target.value })
-	}
-
 	onSubmitSignIn = () => {
+		const { emailInput, passwordInput, nameInput, loadUser, onRouteChange } = this.props
 		fetch("https://murmuring-plateau-15762.herokuapp.com/register", {
 			method: "post",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({
-				email: this.state.email,
-				password: this.state.password,
-				name: this.state.name
+				email: emailInput,
+				password: passwordInput,
+				name: nameInput
 			})
 		})
 			.then(response => response.json())
 			.then(user => {
 				if (user.id) {
-					console.log(user)
-					this.props.loadUser(user)
-					this.props.onRouteChange("home")
+					loadUser(user)
+					onRouteChange("home")
 				}
 			})
 	}
 
 	render() {
+		const { onNameChange, onEmailChange, onPasswordChange } = this.props
+
 		return this.props.render({
 			title: "Register",
 			inputLabels: ["Name", "Email", "Password"],
-			inputMethods: [this.onNameChange, this.onEmailChange, this.onPasswordChange],
+			inputMethods: [onNameChange, onEmailChange, onPasswordChange],
 			buttonLabels: ["Sign In"],
 			buttonMethods: [this.onSubmitSignIn]
 		})
 	}
 }
 
-export default Register
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Register)
 
 // render() {
 // 	return (
