@@ -3,7 +3,7 @@ import ReactDOM from "react-dom"
 import { Provider } from "react-redux"
 import { createStore, applyMiddleware } from "redux"
 import { createLogger } from "redux-logger"
-import { inputFieldChange } from "./reducers"
+import { onInputFieldChange } from "./reducers"
 import "./index.css"
 import App from "./containers/App"
 import * as serviceWorker from "./serviceWorker"
@@ -12,7 +12,7 @@ import "tachyons"
 //const rootReducer = combineReducers({ })
 
 const logger = createLogger()
-const store = createStore(inputFieldChange, applyMiddleware(logger))
+const store = createStore(onInputFieldChange, applyMiddleware(logger))
 
 ReactDOM.render(
 	<Provider store={store}>
