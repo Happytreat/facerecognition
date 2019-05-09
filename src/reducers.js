@@ -6,7 +6,7 @@ const initialFormState = {
 	nameInput: ""
 }
 
-export const inputFieldChange = (state = initialFormState, action = {}) => {
+export const updateInputField = (state = initialFormState, action = {}) => {
 	switch (action.type) {
 		case CHANGE_EMAIL_FIELD:
 			return Object.assign({}, state, { emailInput: action.payload })
