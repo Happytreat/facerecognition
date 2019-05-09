@@ -1,49 +1,15 @@
 import React, { Component } from "react"
 import Particles from "react-particles-js"
-import Navigation from "./components/Navigation/Navigation"
-import Logo from "./components/Logo/Logo"
-import Rank from "./components/Rank/Rank"
-import Form from "./components/Form/Form"
-import Signin from "./components/Form/Signin/Signin"
-import Register from "./components/Form/Register/Register"
-import FaceRecognition from "./components/FaceRecognition/FaceRecognition"
-import ImageLinkForm from "./components/ImageLinkForm/ImageLinkForm"
+import Navigation from "../components/Navigation/Navigation"
+import Logo from "../components/Logo/Logo"
+import Rank from "../components/Rank/Rank"
+import Form from "../components/Form/Form"
+import Signin from "../components/Form/Signin/Signin"
+import Register from "../components/Form/Register/Register"
+import FaceRecognition from "../components/FaceRecognition/FaceRecognition"
+import ImageLinkForm from "../components/ImageLinkForm/ImageLinkForm"
+import ParticleOptions from "./Particle"
 import "./App.css"
-
-const particleOptions = {
-	particles: {
-		number: {
-			value: 70,
-			density: {
-				enable: true
-			}
-		},
-		size: {
-			value: 10,
-			random: true
-		},
-		move: {
-			direction: "bottom",
-			out_mode: "out"
-		},
-		line_linked: {
-			enable: false
-		}
-	},
-	interactivity: {
-		events: {
-			onclick: {
-				enable: true,
-				mode: "remove"
-			}
-		},
-		modes: {
-			remove: {
-				particles_nb: 10
-			}
-		}
-	}
-}
 
 const initialState = {
 	input: "",
@@ -148,7 +114,7 @@ class App extends Component {
 		const { isSignedIn, imageUrl, box, route } = this.state
 		return (
 			<div className='App'>
-				<Particles className='particles' params={particleOptions} />
+				<Particles className='particles' params={ParticleOptions} />
 				<Navigation onRouteChange={this.onRouteChange} isSignedIn={isSignedIn} />
 
 				{route === "home" ? (
