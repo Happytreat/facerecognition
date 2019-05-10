@@ -14,8 +14,7 @@ const mapStateToProps = state => {
 	return {
 		emailInput: state.updateInputField.emailInput,
 		passwordInput: state.updateInputField.passwordInput,
-		nameInput: state.updateInputField.nameInput,
-		isPending: state.updatePendingStatus.isPending
+		nameInput: state.updateInputField.nameInput
 	}
 }
 
