@@ -11,7 +11,7 @@ import "tachyons"
 const rootReducer = combineReducers({ updateInputField, updateUser, updateAppStatus })
 
 const middlewares = []
-if (process.env.NODE_ENV === "development") {
+if (process.env.NODE_ENV !== "development") {
 	console.log(process.env.NODE_ENV)
 	const { logger } = require("redux-logger")
 	middlewares.push(logger)
