@@ -36,7 +36,8 @@ class Signin extends React.Component {
 	// }
 
 	onSubmitSignIn = () => {
-		console.log("In Sign in.")
+		//console.log("In Sign in.")
+		// TODO: Loading Animation
 		fetch("https://murmuring-plateau-15762.herokuapp.com/signin", {
 			method: "post",
 			headers: { "Content-Type": "application/json" },
