@@ -3,30 +3,24 @@ import Logo from "../components/Logo/Logo"
 import Rank from "../components/Rank/Rank"
 import FaceRecognition from "../components/FaceRecognition/FaceRecognition"
 import ImageLinkForm from "../components/ImageLinkForm/ImageLinkForm"
-import { setImageUrlField } from "../actions"
+import { setImageUrlField, incrementUserEntries } from "../actions"
 import { connect } from "react-redux"
 
 const initialState = {
-	box: {},
-	user: {
-		id: "",
-		name: "",
-		email: "",
-		entries: 0,
-		joined: ""
-	}
+	box: {}
 }
 
 const mapStateToProps = state => {
 	return {
-		imageUrl: state.updateInputField.imageUrl
-		//user: state.updateUser.user
+		imageUrl: state.updateInputField.imageUrl,
+		user: state.updateUser.user
 	}
 }
 
 const mapDispatchToProps = dispatch => {
 	return {
-		onInputChange: event => dispatch(setImageUrlField(event.target.value))
+		onInputChange: event => dispatch(setImageUrlField(event.target.value)),
+		updateUserEntries: count => dispatch(incrementUserEntries(count))
 	}
 }
 
@@ -71,13 +65,13 @@ class Dashboard extends Component {
 						method: "put",
 						headers: { "Content-Type": "application/json" },
 						body: JSON.stringify({
-							id: this.state.user.id
+							id: this.props.user.id
 						})
 					})
 						.then(response => response.json())
-						//TODO: Create reducer for incrementing user.entries (after having a user state in Store)
 						.then(count => {
-							this.setState(Object.assign(this.state.user, { entries: count }))
+							this.props.updateUserEntries(count)
+							//this.setState(Object.assign(this.state.user, { entries: count }))
 						})
 						.catch(console.log)
 				}

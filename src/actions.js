@@ -3,7 +3,8 @@ import {
 	CHANGE_PASSWORD_FIELD,
 	CHANGE_NAME_FIELD,
 	CHANGE_IMAGE_URL_FIELD,
-	LOAD_USER
+	LOAD_USER,
+	INCREMENT_USER_ENTRIES
 } from "./constants"
 
 export const setEmailField = text => ({
@@ -29,4 +30,9 @@ export const setImageUrlField = text => ({
 export const setUser = user => ({
 	type: LOAD_USER,
 	payload: user
+})
+
+export const incrementUserEntries = count => ({
+	type: INCREMENT_USER_ENTRIES,
+	payload: count
 })

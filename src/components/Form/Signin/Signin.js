@@ -51,7 +51,6 @@ class Signin extends React.Component {
 		})
 			.then(response => response.json())
 			.then(user => {
-				// dispatch user
 				//this.props.changePending(false) dispatched
 				if (user.id) {
 					console.log("User", user)
