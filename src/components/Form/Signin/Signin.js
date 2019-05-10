@@ -39,7 +39,7 @@ class Signin extends React.Component {
 		//console.log("In Sign in.")
 		// TODO: Loading Animation
 		// TODO: Break up submitSIgnIn to 2 seaprate components: Sign in to server and routechange / loaduser
-
+		//this.props.changePending(true)
 		fetch("https://murmuring-plateau-15762.herokuapp.com/signin", {
 			method: "post",
 			headers: { "Content-Type": "application/json" },
@@ -51,6 +51,7 @@ class Signin extends React.Component {
 			.then(response => response.json())
 			.then(user => {
 				// dispatch user
+				//this.props.changePending(false) dispatched
 				if (user.id) {
 					this.props.loadUser(user) // redundant as user is dispatched
 					this.props.onRouteChange("home") //redirect using react-dom

@@ -18,6 +18,7 @@ const initialState = {
 	box: {},
 	route: "signin",
 	isSignedIn: false,
+	isPending: false,
 	user: {
 		id: "",
 		name: "",
@@ -111,8 +112,7 @@ class App extends Component {
 		}
 	}
 
-	isPending = true
-
+	// Have to create a signout reducer too (for nav bar)
 	render() {
 		const { isSignedIn, imageUrl, box, route } = this.state
 		return (
