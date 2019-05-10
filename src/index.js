@@ -1,8 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import { Provider } from "react-redux"
-import { createStore, applyMiddleware } from "redux"
-import { createLogger } from "redux-logger"
+import { createStore, applyMiddleware, compose } from "redux"
 import { updateInputField } from "./reducers"
 import "./index.css"
 import App from "./containers/App"
@@ -11,8 +10,14 @@ import "tachyons"
 
 //const rootReducer = combineReducers({ })
 
-const logger = createLogger()
-const store = createStore(updateInputField, applyMiddleware(logger))
+const middlewares = []
+if (process.env.NODE_ENV === "development") {
+	console.log(process.env.NODE_ENV)
+	const { logger } = require("redux-logger")
+	middlewares.push(logger)
+}
+
+const store = compose(applyMiddleware(...middlewares))(createStore)(updateInputField)
 
 ReactDOM.render(
 	<Provider store={store}>
