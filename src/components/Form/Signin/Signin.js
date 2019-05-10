@@ -47,8 +47,6 @@ class Signin extends React.Component {
 	// }
 
 	onSubmitSignIn = () => {
-		// TODO: Loading Animation
-		// TODO: Break up submitSIgnIn to 2 seaprate components: Sign in to server and routechange / loaduser
 		this.props.onSigninPending()
 		fetch("https://murmuring-plateau-15762.herokuapp.com/signin", {
 			method: "post",
