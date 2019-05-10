@@ -73,18 +73,18 @@ const initialAppState = {
 export const updateAppStatus = (state = initialAppState, action = {}) => {
 	switch (action.type) {
 		case SIGNIN_REQUEST_PENDING:
-			console.log("Pending!")
+			//console.log("Pending!")
 			return Object.assign({}, state, { isPending: true })
 		case SIGNIN_REQUEST_SUCCESS:
-			console.log("SUCCESS!")
+			// console.log("SUCCESS!")
 			return Object.assign({}, state, { isPending: false, isSignedIn: true })
 		case SIGNIN_REQUEST_FAILED:
 			return Object.assign({}, state, { isPending: false })
 		case REGISTER_REQUEST_PENDING:
-			console.log("Pending!")
+			// console.log("Pending!")
 			return Object.assign({}, state, { isPending: true })
 		case REGISTER_REQUEST_SUCCESS:
-			console.log("SUCCESS!")
+			// console.log("SUCCESS!")
 			return Object.assign({}, state, { isPending: false, isSignedIn: true })
 		case REGISTER_REQUEST_FAILED:
 			return Object.assign({}, state, { isPending: false })

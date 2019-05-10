@@ -57,9 +57,9 @@ class Dashboard extends Component {
 		})
 			.then(response => response.json())
 			.then(response => {
-				console.log("Clarifai response", response)
+				// console.log("Clarifai response", response)
 				this.displayFaceBox(this.calculateFaceLocation(response))
-				console.log("box", this.state.box)
+				// console.log("box", this.state.box)
 				if (response) {
 					fetch("https://murmuring-plateau-15762.herokuapp.com/image", {
 						method: "put",
