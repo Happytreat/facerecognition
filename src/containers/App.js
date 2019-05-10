@@ -8,6 +8,7 @@ import Signin from "../components/Form/Signin/Signin"
 import Register from "../components/Form/Register/Register"
 import FaceRecognition from "../components/FaceRecognition/FaceRecognition"
 import ImageLinkForm from "../components/ImageLinkForm/ImageLinkForm"
+import Loader from "react-loader-spinner"
 import ParticleOptions from "./Particle"
 import "./App.css"
 
@@ -110,14 +111,19 @@ class App extends Component {
 		}
 	}
 
+	isPending = true
+
 	render() {
 		const { isSignedIn, imageUrl, box, route } = this.state
 		return (
 			<div className='App'>
 				<Particles className='particles' params={ParticleOptions} />
 				<Navigation onRouteChange={this.onRouteChange} isSignedIn={isSignedIn} />
-
-				{route === "home" ? (
+				{this.isPending ? (
+					<div className='centered'>
+						<Loader type='Hearts' color='#FFF340' height={100} width={100} />
+					</div>
+				) : route === "home" ? (
 					<div>
 						<Logo />
 						<Rank name={this.state.user.name} entries={this.state.user.entries} />

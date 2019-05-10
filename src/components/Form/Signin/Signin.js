@@ -50,9 +50,10 @@ class Signin extends React.Component {
 		})
 			.then(response => response.json())
 			.then(user => {
+				// dispatch user
 				if (user.id) {
-					this.props.loadUser(user)
-					this.props.onRouteChange("home")
+					this.props.loadUser(user) // redundant as user is dispatched
+					this.props.onRouteChange("home") //redirect using react-dom
 				}
 			})
 	}
