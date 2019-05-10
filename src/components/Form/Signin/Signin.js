@@ -1,6 +1,13 @@
 import React from "react"
 import { connect } from "react-redux"
-import { setEmailField, setPasswordField } from "../../../actions"
+import {
+	setEmailField,
+	setPasswordField,
+	setUser,
+	setRequestPending,
+	setRequestSuccess,
+	setRequestFail
+} from "../../../actions"
 
 // const initialState = {
 // 	signInEmail: "",
@@ -9,15 +16,19 @@ import { setEmailField, setPasswordField } from "../../../actions"
 
 const mapStateToProps = state => {
 	return {
-		emailInput: state.emailInput,
-		passwordInput: state.passwordInput
+		emailInput: state.updateInputField.emailInput,
+		passwordInput: state.updateInputField.passwordInput
 	}
 }
 
 const mapDispatchToProps = dispatch => {
 	return {
 		onEmailChange: event => dispatch(setEmailField(event.target.value)),
-		onPasswordChange: event => dispatch(setPasswordField(event.target.value))
+		onPasswordChange: event => dispatch(setPasswordField(event.target.value)),
+		loadUser: user => dispatch(setUser(user)),
+		onSigninPending: () => dispatch(setRequestPending()),
+		onSigninSuccess: () => dispatch(setRequestSuccess()),
+		onSigninFail: () => dispatch(setRequestFail())
 	}
 }
 
@@ -36,10 +47,7 @@ class Signin extends React.Component {
 	// }
 
 	onSubmitSignIn = () => {
-		//console.log("In Sign in.")
-		// TODO: Loading Animation
-		// TODO: Break up submitSIgnIn to 2 seaprate components: Sign in to server and routechange / loaduser
-
+		this.props.onSigninPending()
 		fetch("https://murmuring-plateau-15762.herokuapp.com/signin", {
 			method: "post",
 			headers: { "Content-Type": "application/json" },
@@ -50,11 +58,17 @@ class Signin extends React.Component {
 		})
 			.then(response => response.json())
 			.then(user => {
+				//this.props.changePending(false) dispatched
 				if (user.id) {
+					this.props.onSigninSuccess()
 					this.props.loadUser(user)
-					this.props.onRouteChange("home")
+					this.props.onRouteChange("home") //redirect using react-dom
+				} else {
+					this.props.onSigninFail()
+					alert("You have entered the wrong credentials.")
 				}
 			})
+			.catch(this.props.onSigninFail)
 	}
 
 	render() {
@@ -74,4 +88,3 @@ export default connect(
 	mapStateToProps,
 	mapDispatchToProps
 )(Signin)
-//export default Signin

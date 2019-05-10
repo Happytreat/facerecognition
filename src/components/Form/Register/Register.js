@@ -1,12 +1,20 @@
 import React from "react"
 import { connect } from "react-redux"
-import { setEmailField, setPasswordField, setNameField } from "../../../actions"
+import {
+	setEmailField,
+	setPasswordField,
+	setUser,
+	setNameField,
+	setRegisterReqPending,
+	setRegisterReqSuccess,
+	setRegisterReqFail
+} from "../../../actions"
 
 const mapStateToProps = state => {
 	return {
-		emailInput: state.emailInput,
-		passwordInput: state.passwordInput,
-		nameInput: state.nameInput
+		emailInput: state.updateInputField.emailInput,
+		passwordInput: state.updateInputField.passwordInput,
+		nameInput: state.updateInputField.nameInput
 	}
 }
 
@@ -14,13 +22,28 @@ const mapDispatchToProps = dispatch => {
 	return {
 		onEmailChange: event => dispatch(setEmailField(event.target.value)),
 		onPasswordChange: event => dispatch(setPasswordField(event.target.value)),
-		onNameChange: event => dispatch(setNameField(event.target.value))
+		onNameChange: event => dispatch(setNameField(event.target.value)),
+		loadUser: user => dispatch(setUser(user)),
+		onRegisterPending: () => dispatch(setRegisterReqPending()),
+		onRegisterSuccess: () => dispatch(setRegisterReqSuccess()),
+		onRegisterFail: () => dispatch(setRegisterReqFail())
 	}
 }
 
 class Register extends React.Component {
-	onSubmitSignIn = () => {
-		const { emailInput, passwordInput, nameInput, loadUser, onRouteChange } = this.props
+	onRegisterSignIn = () => {
+		const {
+			emailInput,
+			passwordInput,
+			nameInput,
+			loadUser,
+			onRouteChange,
+			onRegisterPending,
+			onRegisterSuccess,
+			onRegisterFail
+		} = this.props
+
+		onRegisterPending()
 		fetch("https://murmuring-plateau-15762.herokuapp.com/register", {
 			method: "post",
 			headers: { "Content-Type": "application/json" },
@@ -33,8 +56,12 @@ class Register extends React.Component {
 			.then(response => response.json())
 			.then(user => {
 				if (user.id) {
+					onRegisterSuccess()
 					loadUser(user)
 					onRouteChange("home")
+				} else {
+					onRegisterFail()
+					alert("Details cannot be empty.")
 				}
 			})
 	}
@@ -47,7 +74,7 @@ class Register extends React.Component {
 			inputLabels: ["Name", "Email", "Password"],
 			inputMethods: [onNameChange, onEmailChange, onPasswordChange],
 			buttonLabels: ["Sign In"],
-			buttonMethods: [this.onSubmitSignIn]
+			buttonMethods: [this.onRegisterSignIn]
 		})
 	}
 }
