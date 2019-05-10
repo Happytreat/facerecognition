@@ -9,8 +9,8 @@ import { setEmailField, setPasswordField } from "../../../actions"
 
 const mapStateToProps = state => {
 	return {
-		emailInput: state.emailInput,
-		passwordInput: state.passwordInput
+		emailInput: state.updateInputField.emailInput,
+		passwordInput: state.updateInputField.passwordInput
 	}
 }
 
