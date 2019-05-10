@@ -1,6 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
-import { setEmailField, setPasswordField } from "../../../actions"
+import { setEmailField, setPasswordField, setUser } from "../../../actions"
 
 // const initialState = {
 // 	signInEmail: "",
@@ -17,7 +17,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
 	return {
 		onEmailChange: event => dispatch(setEmailField(event.target.value)),
-		onPasswordChange: event => dispatch(setPasswordField(event.target.value))
+		onPasswordChange: event => dispatch(setPasswordField(event.target.value)),
+		loadUser: user => dispatch(setUser(user))
 	}
 }
 
@@ -53,7 +54,8 @@ class Signin extends React.Component {
 				// dispatch user
 				//this.props.changePending(false) dispatched
 				if (user.id) {
-					this.props.loadUser(user) // redundant as user is dispatched
+					console.log("User", user)
+					this.props.loadUser(user)
 					this.props.onRouteChange("home") //redirect using react-dom
 				}
 			})
@@ -76,4 +78,3 @@ export default connect(
 	mapStateToProps,
 	mapDispatchToProps
 )(Signin)
-//export default Signin

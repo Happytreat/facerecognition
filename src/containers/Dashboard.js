@@ -3,10 +3,10 @@ import Logo from "../components/Logo/Logo"
 import Rank from "../components/Rank/Rank"
 import FaceRecognition from "../components/FaceRecognition/FaceRecognition"
 import ImageLinkForm from "../components/ImageLinkForm/ImageLinkForm"
+import { setImageUrlField } from "../actions"
+import { connect } from "react-redux"
 
 const initialState = {
-	input: "",
-	imageUrl: "",
 	box: {},
 	user: {
 		id: "",
@@ -17,7 +17,20 @@ const initialState = {
 	}
 }
 
-class Home extends Component {
+const mapStateToProps = state => {
+	return {
+		imageUrl: state.updateInputField.imageUrl
+		//user: state.updateUser.user
+	}
+}
+
+const mapDispatchToProps = dispatch => {
+	return {
+		onInputChange: event => dispatch(setImageUrlField(event.target.value))
+	}
+}
+
+class Dashboard extends Component {
 	constructor() {
 		super()
 		this.state = initialState
@@ -41,23 +54,18 @@ class Home extends Component {
 		this.setState({ box: box })
 	}
 
-	onInputChange = event => {
-		this.setState({ input: event.target.value })
-	}
-
 	onPictureSubmit = () => {
-		this.setState({ imageUrl: this.state.input })
-
 		fetch("https://murmuring-plateau-15762.herokuapp.com/imageurl", {
 			method: "post",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({
-				input: this.state.input
+				input: this.props.imageUrl
 			})
 		})
 			.then(response => response.json())
 			.then(response => {
-				console.log("Clarifai response", response)
+				//console.log("Clarifai response", response)
+				this.displayFaceBox(this.calculateFaceLocation(response))
 				if (response) {
 					fetch("https://murmuring-plateau-15762.herokuapp.com/image", {
 						method: "put",
@@ -67,27 +75,31 @@ class Home extends Component {
 						})
 					})
 						.then(response => response.json())
+						//TODO: Create reducer for incrementing user.entries (after having a user state in Store)
 						.then(count => {
 							this.setState(Object.assign(this.state.user, { entries: count }))
 						})
 						.catch(console.log)
 				}
-				this.displayFaceBox(this.calculateFaceLocation(response))
 			})
 			.catch(err => console.log(err))
 	}
 
 	render() {
 		const { imageUrl, box } = this.state
+		const { onInputChange, user } = this.props
 		return (
 			<div>
 				<Logo />
-				<Rank name={this.state.user.name} entries={this.state.user.entries} />
-				<ImageLinkForm onInputChange={this.onInputChange} onPictureSubmit={this.onPictureSubmit} />
+				<Rank name={user.name} entries={user.entries} />
+				<ImageLinkForm onInputChange={onInputChange} onPictureSubmit={this.onPictureSubmit} />
 				<FaceRecognition box={box} imageUrl={imageUrl} />
 			</div>
 		)
 	}
 }
 
-export default Home
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Dashboard)
