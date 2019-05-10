@@ -65,11 +65,10 @@ class Signin extends React.Component {
 					this.props.onRouteChange("home") //redirect using react-dom
 				} else {
 					this.props.onSigninFail()
+					alert("You have entered the wrong credentials.")
 				}
 			})
-			.catch(err => {
-				this.props.onSigninFail()
-			})
+			.catch(this.props.onSigninFail)
 	}
 
 	render() {
