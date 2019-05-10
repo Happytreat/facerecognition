@@ -4,7 +4,10 @@ import {
 	CHANGE_NAME_FIELD,
 	CHANGE_IMAGE_URL_FIELD,
 	LOAD_USER,
-	INCREMENT_USER_ENTRIES
+	INCREMENT_USER_ENTRIES,
+	SIGNIN_REQUEST_PENDING,
+	SIGNIN_REQUEST_SUCCESS,
+	SIGNIN_REQUEST_FAILED
 } from "./constants"
 
 const initialFormState = {
@@ -46,6 +49,24 @@ export const updateUser = (state = initialUserState, action = {}) => {
 			return Object.assign({}, state, {
 				user: Object.assign(state.user, { entries: action.payload })
 			})
+		default:
+			return state
+	}
+}
+
+const initialPendingState = {
+	isPending: false
+}
+
+// TODO: Add isSignedIn and isSignedInFailed
+export const updatePendingStatus = (state = initialPendingState, action = {}) => {
+	switch (action.type) {
+		case SIGNIN_REQUEST_PENDING:
+			return Object.assign({}, state, { isPending: true })
+		case SIGNIN_REQUEST_SUCCESS:
+			return Object.assign({}, state, { isPending: false })
+		case SIGNIN_REQUEST_FAILED:
+			return Object.assign({}, state, { isPending: false })
 		default:
 			return state
 	}

@@ -4,7 +4,10 @@ import {
 	CHANGE_NAME_FIELD,
 	CHANGE_IMAGE_URL_FIELD,
 	LOAD_USER,
-	INCREMENT_USER_ENTRIES
+	INCREMENT_USER_ENTRIES,
+	SIGNIN_REQUEST_PENDING,
+	SIGNIN_REQUEST_SUCCESS,
+	SIGNIN_REQUEST_FAILED
 } from "./constants"
 
 export const setEmailField = text => ({
@@ -35,4 +38,16 @@ export const setUser = user => ({
 export const incrementUserEntries = count => ({
 	type: INCREMENT_USER_ENTRIES,
 	payload: count
+})
+
+export const setRequestPending = () => ({
+	type: SIGNIN_REQUEST_PENDING
+})
+
+export const setRequestSuccess = () => ({
+	type: SIGNIN_REQUEST_SUCCESS
+})
+
+export const setRequestFail = () => ({
+	type: SIGNIN_REQUEST_FAILED
 })

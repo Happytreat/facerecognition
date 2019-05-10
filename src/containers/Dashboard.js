@@ -49,6 +49,7 @@ class Dashboard extends Component {
 	}
 
 	onPictureSubmit = () => {
+		console.log(this.props.imageUrl)
 		fetch("https://murmuring-plateau-15762.herokuapp.com/imageurl", {
 			method: "post",
 			headers: { "Content-Type": "application/json" },
@@ -58,8 +59,9 @@ class Dashboard extends Component {
 		})
 			.then(response => response.json())
 			.then(response => {
-				//console.log("Clarifai response", response)
+				console.log("Clarifai response", response)
 				this.displayFaceBox(this.calculateFaceLocation(response))
+				console.log("box", this.state.box)
 				if (response) {
 					fetch("https://murmuring-plateau-15762.herokuapp.com/image", {
 						method: "put",
@@ -80,8 +82,8 @@ class Dashboard extends Component {
 	}
 
 	render() {
-		const { imageUrl, box } = this.state
-		const { onInputChange, user } = this.props
+		const { box } = this.state
+		const { onInputChange, user, imageUrl } = this.props
 		return (
 			<div>
 				<Logo />
