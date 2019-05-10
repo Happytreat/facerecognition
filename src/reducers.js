@@ -55,7 +55,7 @@ export const updateUser = (state = initialUserState, action = {}) => {
 			return Object.assign({}, state, { user: action.payload })
 		case INCREMENT_USER_ENTRIES:
 			return Object.assign({}, state, {
-				user: Object.assign(state.user, { entries: action.payload })
+				user: Object.assign({}, state.user, { entries: action.payload })
 			})
 		case CLEAR_USER:
 			return Object.assign({}, state, initialUserState)

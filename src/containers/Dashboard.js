@@ -48,7 +48,6 @@ class Dashboard extends Component {
 	}
 
 	onPictureSubmit = () => {
-		console.log(this.props.imageUrl)
 		fetch("https://murmuring-plateau-15762.herokuapp.com/imageurl", {
 			method: "post",
 			headers: { "Content-Type": "application/json" },
@@ -71,6 +70,7 @@ class Dashboard extends Component {
 					})
 						.then(response => response.json())
 						.then(count => {
+							//console.log(count)
 							this.props.updateUserEntries(count)
 							//this.setState(Object.assign(this.state.user, { entries: count }))
 						})
