@@ -7,7 +7,10 @@ import {
 	INCREMENT_USER_ENTRIES,
 	SIGNIN_REQUEST_PENDING,
 	SIGNIN_REQUEST_SUCCESS,
-	SIGNIN_REQUEST_FAILED
+	SIGNIN_REQUEST_FAILED,
+	REGISTER_REQUEST_PENDING,
+	REGISTER_REQUEST_SUCCESS,
+	REGISTER_REQUEST_FAILED
 } from "./constants"
 
 export const setEmailField = text => ({
@@ -50,4 +53,16 @@ export const setRequestSuccess = () => ({
 
 export const setRequestFail = () => ({
 	type: SIGNIN_REQUEST_FAILED
+})
+
+export const setRegisterReqPending = () => ({
+	type: REGISTER_REQUEST_PENDING
+})
+
+export const setRegisterReqSuccess = () => ({
+	type: REGISTER_REQUEST_SUCCESS
+})
+
+export const setRegisterReqFail = () => ({
+	type: REGISTER_REQUEST_FAILED
 })

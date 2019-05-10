@@ -7,7 +7,10 @@ import {
 	INCREMENT_USER_ENTRIES,
 	SIGNIN_REQUEST_PENDING,
 	SIGNIN_REQUEST_SUCCESS,
-	SIGNIN_REQUEST_FAILED
+	SIGNIN_REQUEST_FAILED,
+	REGISTER_REQUEST_PENDING,
+	REGISTER_REQUEST_SUCCESS,
+	REGISTER_REQUEST_FAILED
 } from "./constants"
 
 const initialFormState = {
@@ -68,6 +71,14 @@ export const updatePendingStatus = (state = initialPendingState, action = {}) =>
 			console.log("SUCCESS!")
 			return Object.assign({}, state, { isPending: false })
 		case SIGNIN_REQUEST_FAILED:
+			return Object.assign({}, state, { isPending: false })
+		case REGISTER_REQUEST_PENDING:
+			console.log("Pending!")
+			return Object.assign({}, state, { isPending: true })
+		case REGISTER_REQUEST_SUCCESS:
+			console.log("SUCCESS!")
+			return Object.assign({}, state, { isPending: false })
+		case REGISTER_REQUEST_FAILED:
 			return Object.assign({}, state, { isPending: false })
 		default:
 			return state

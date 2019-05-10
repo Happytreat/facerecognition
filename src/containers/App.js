@@ -93,7 +93,6 @@ class App extends Component {
 					/>
 				) : (
 					<Register
-						loadUser={this.loadUser}
 						onRouteChange={this.onRouteChange}
 						render={({ title, inputLabels, inputMethods, buttonLabels, buttonMethods }) => (
 							<Form
