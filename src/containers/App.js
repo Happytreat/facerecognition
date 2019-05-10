@@ -31,18 +31,6 @@ class App extends Component {
 		this.state = initialState
 	}
 
-	loadUser = data => {
-		this.setState({
-			user: {
-				id: data.id,
-				name: data.name,
-				email: data.email,
-				entries: data.entries,
-				joined: data.joined
-			}
-		})
-	}
-
 	onRouteChange = route => {
 		if (route === "signout") {
 			this.setState(initialState)
