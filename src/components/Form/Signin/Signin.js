@@ -65,6 +65,8 @@ class Signin extends React.Component {
 					this.props.onSigninSuccess()
 					this.props.loadUser(user)
 					this.props.onRouteChange("home") //redirect using react-dom
+				} else {
+					this.props.onSigninFail()
 				}
 			})
 			.catch(err => {

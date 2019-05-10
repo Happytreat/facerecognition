@@ -62,8 +62,10 @@ const initialPendingState = {
 export const updatePendingStatus = (state = initialPendingState, action = {}) => {
 	switch (action.type) {
 		case SIGNIN_REQUEST_PENDING:
+			console.log("Pending!")
 			return Object.assign({}, state, { isPending: true })
 		case SIGNIN_REQUEST_SUCCESS:
+			console.log("SUCCESS!")
 			return Object.assign({}, state, { isPending: false })
 		case SIGNIN_REQUEST_FAILED:
 			return Object.assign({}, state, { isPending: false })

@@ -7,12 +7,12 @@ import Register from "../components/Form/Register/Register"
 import Dashboard from "./Dashboard"
 import Loader from "react-loader-spinner"
 import ParticleOptions from "./Particle"
+import { connect } from "react-redux"
 import "./App.css"
 
 const initialState = {
 	route: "signin",
 	isSignedIn: false,
-	isPending: false,
 	user: {
 		id: "",
 		name: "",
@@ -20,6 +20,16 @@ const initialState = {
 		entries: 0,
 		joined: ""
 	}
+}
+
+const mapStateToProps = state => {
+	return {
+		isPending: state.updatePendingStatus.isPending
+	}
+}
+
+const mapDispatchToProps = dispatch => {
+	return {}
 }
 
 class App extends Component {
@@ -52,14 +62,15 @@ class App extends Component {
 		}
 	}
 
-	// Have to create a signout reducer too (for nav bar)
+	// Have to create a signout reducer too (for nav bar) - clear to initialState (for user and not sign in status)
+
 	render() {
 		const { isSignedIn, route, user } = this.state
 		return (
 			<div className='App'>
 				<Particles className='particles' params={ParticleOptions} />
 				<Navigation onRouteChange={this.onRouteChange} isSignedIn={isSignedIn} />
-				{this.isPending ? (
+				{this.props.isPending ? (
 					<div className='centered'>
 						<Loader type='Hearts' color='#FFF340' height={100} width={100} />
 					</div>
@@ -100,4 +111,7 @@ class App extends Component {
 	}
 }
 
-export default App
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(App)
