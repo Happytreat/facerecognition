@@ -2,13 +2,13 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { Provider } from "react-redux"
 import { createStore, applyMiddleware, compose, combineReducers } from "redux"
-import { updateInputField, updateUser, updatePendingStatus } from "./reducers"
+import { updateInputField, updateUser, updateAppStatus } from "./reducers"
 import "./index.css"
 import App from "./containers/App"
 import * as serviceWorker from "./serviceWorker"
 import "tachyons"
 
-const rootReducer = combineReducers({ updateInputField, updateUser, updatePendingStatus })
+const rootReducer = combineReducers({ updateInputField, updateUser, updateAppStatus })
 
 const middlewares = []
 if (process.env.NODE_ENV === "development") {

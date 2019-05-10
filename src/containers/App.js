@@ -5,24 +5,29 @@ import Form from "../components/Form/Form"
 import Signin from "../components/Form/Signin/Signin"
 import Register from "../components/Form/Register/Register"
 import Dashboard from "./Dashboard"
+import { setSignOut, clearInputField, clearUser } from "../actions"
 import Loader from "react-loader-spinner"
 import ParticleOptions from "./Particle"
 import { connect } from "react-redux"
 import "./App.css"
 
 const initialState = {
-	route: "signin",
-	isSignedIn: false
+	route: "signin"
 }
 
 const mapStateToProps = state => {
 	return {
-		isPending: state.updatePendingStatus.isPending
+		isPending: state.updateAppStatus.isPending,
+		isSignedIn: state.updateAppStatus.isSignedIn
 	}
 }
 
 const mapDispatchToProps = dispatch => {
-	return {}
+	return {
+		onSignOut: () => dispatch(setSignOut()),
+		onClearInput: () => dispatch(clearInputField()),
+		onClearUsers: () => dispatch(clearUser())
+	}
 }
 
 class App extends Component {
@@ -33,31 +38,31 @@ class App extends Component {
 
 	onRouteChange = route => {
 		if (route === "signout") {
-			this.setState(initialState)
-			console.log("After Sign Out: ", this.state.route)
+			this.props.onSignOut()
+			this.props.onClearInput()
+			this.props.onClearUsers()
+			this.setState({ route: "signin" })
 		} else if (route === "home") {
-			this.setState({ isSignedIn: true })
 			this.setState({ route: route })
 		} else {
 			this.setState({ route: route })
 		}
 	}
 
-	// Have to create a signout reducer too (for nav bar) - clear to initialState (for user and not sign in status)
-
 	render() {
-		const { isSignedIn, route, user } = this.state
+		const { route } = this.state
+		const { isPending, isSignedIn } = this.props
 		return (
 			<div className='App'>
 				<Particles className='particles' params={ParticleOptions} />
 				<Navigation onRouteChange={this.onRouteChange} isSignedIn={isSignedIn} />
-				{this.props.isPending ? (
+				{isPending ? (
 					<div className='centered'>
 						<Loader type='Hearts' color='#FFF340' height={100} width={100} />
 					</div>
 				) : route === "home" ? (
 					<div>
-						<Dashboard user={user} />
+						<Dashboard />
 					</div>
 				) : route === "signin" ? (
 					<Signin

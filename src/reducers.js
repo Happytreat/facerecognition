@@ -10,7 +10,10 @@ import {
 	SIGNIN_REQUEST_FAILED,
 	REGISTER_REQUEST_PENDING,
 	REGISTER_REQUEST_SUCCESS,
-	REGISTER_REQUEST_FAILED
+	REGISTER_REQUEST_FAILED,
+	SIGN_OUT,
+	CLEAR_INPUT_FIELD,
+	CLEAR_USER
 } from "./constants"
 
 const initialFormState = {
@@ -29,6 +32,8 @@ export const updateInputField = (state = initialFormState, action = {}) => {
 			return Object.assign({}, state, { nameInput: action.payload })
 		case CHANGE_IMAGE_URL_FIELD:
 			return Object.assign({}, state, { imageUrl: action.payload })
+		case CLEAR_INPUT_FIELD:
+			return Object.assign({}, state, initialFormState)
 		default:
 			return state
 	}
@@ -52,24 +57,27 @@ export const updateUser = (state = initialUserState, action = {}) => {
 			return Object.assign({}, state, {
 				user: Object.assign(state.user, { entries: action.payload })
 			})
+		case CLEAR_USER:
+			return Object.assign({}, state, initialUserState)
 		default:
 			return state
 	}
 }
 
-const initialPendingState = {
-	isPending: false
+const initialAppState = {
+	isPending: false,
+	isSignedIn: false
 }
 
 // TODO: Add isSignedIn and isSignedInFailed
-export const updatePendingStatus = (state = initialPendingState, action = {}) => {
+export const updateAppStatus = (state = initialAppState, action = {}) => {
 	switch (action.type) {
 		case SIGNIN_REQUEST_PENDING:
 			console.log("Pending!")
 			return Object.assign({}, state, { isPending: true })
 		case SIGNIN_REQUEST_SUCCESS:
 			console.log("SUCCESS!")
-			return Object.assign({}, state, { isPending: false })
+			return Object.assign({}, state, { isPending: false, isSignedIn: true })
 		case SIGNIN_REQUEST_FAILED:
 			return Object.assign({}, state, { isPending: false })
 		case REGISTER_REQUEST_PENDING:
@@ -77,9 +85,11 @@ export const updatePendingStatus = (state = initialPendingState, action = {}) =>
 			return Object.assign({}, state, { isPending: true })
 		case REGISTER_REQUEST_SUCCESS:
 			console.log("SUCCESS!")
-			return Object.assign({}, state, { isPending: false })
+			return Object.assign({}, state, { isPending: false, isSignedIn: true })
 		case REGISTER_REQUEST_FAILED:
 			return Object.assign({}, state, { isPending: false })
+		case SIGN_OUT:
+			return Object.assign({}, state, { isSignedIn: false })
 		default:
 			return state
 	}

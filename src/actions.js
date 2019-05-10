@@ -10,7 +10,10 @@ import {
 	SIGNIN_REQUEST_FAILED,
 	REGISTER_REQUEST_PENDING,
 	REGISTER_REQUEST_SUCCESS,
-	REGISTER_REQUEST_FAILED
+	REGISTER_REQUEST_FAILED,
+	SIGN_OUT,
+	CLEAR_INPUT_FIELD,
+	CLEAR_USER
 } from "./constants"
 
 export const setEmailField = text => ({
@@ -65,4 +68,16 @@ export const setRegisterReqSuccess = () => ({
 
 export const setRegisterReqFail = () => ({
 	type: REGISTER_REQUEST_FAILED
+})
+
+export const setSignOut = () => ({
+	type: SIGN_OUT
+})
+
+export const clearInputField = () => ({
+	type: CLEAR_INPUT_FIELD
+})
+
+export const clearUser = () => ({
+	type: CLEAR_USER
 })
