@@ -38,6 +38,8 @@ class Signin extends React.Component {
 	onSubmitSignIn = () => {
 		//console.log("In Sign in.")
 		// TODO: Loading Animation
+		// TODO: Break up submitSIgnIn to 2 seaprate components: Sign in to server and routechange / loaduser
+
 		fetch("https://murmuring-plateau-15762.herokuapp.com/signin", {
 			method: "post",
 			headers: { "Content-Type": "application/json" },
