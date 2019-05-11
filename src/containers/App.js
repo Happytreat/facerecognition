@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { BrowserRouter, Route, Redirect } from "react-router-dom"
+import { Route, Redirect, withRouter, Switch } from "react-router-dom"
 import Particles from "react-particles-js"
 import Navigation from "../components/Navigation/Navigation"
 import Form from "../components/Form/Form"
@@ -35,6 +35,17 @@ class App extends Component {
 	constructor() {
 		super()
 		this.state = initialState
+		this.routeChange = this.routeChange.bind(this)
+	}
+
+	routeChange(route) {
+		let path = `/`
+		if (route === "register") {
+			path = `/register`
+		} else if (route === "home") {
+			path = `/dashboard`
+		}
+		this.props.history.push(path)
 	}
 
 	onRouteChange = route => {
@@ -62,7 +73,7 @@ class App extends Component {
 						<Loader type='Hearts' color='#FFF340' height={100} width={100} />
 					</div>
 				) : (
-					<BrowserRouter>
+					<Switch>
 						<Route
 							exact
 							path='/'
@@ -71,7 +82,7 @@ class App extends Component {
 									<Redirect to='/dashboard' />
 								) : (
 									<Signin
-										onRouteChange={this.onRouteChange}
+										onRouteChange={this.routeChange}
 										render={({ title, inputLabels, inputMethods, buttonLabels, buttonMethods }) => (
 											<Form
 												title={title}
@@ -98,7 +109,7 @@ class App extends Component {
 									<Redirect to='/dashboard' />
 								) : (
 									<Register
-										onRouteChange={this.onRouteChange}
+										onRouteChange={this.routeChange}
 										render={({ title, inputLabels, inputMethods, buttonLabels, buttonMethods }) => (
 											<Form
 												title={title}
@@ -112,17 +123,19 @@ class App extends Component {
 								)
 							}
 						/>
-					</BrowserRouter>
+					</Switch>
 				)}
 			</div>
 		)
 	}
 }
 
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(App)
+export default withRouter(
+	connect(
+		mapStateToProps,
+		mapDispatchToProps
+	)(App)
+)
 
 /* <React.Fragment>
 							<Route
