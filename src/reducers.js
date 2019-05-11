@@ -69,7 +69,6 @@ const initialAppState = {
 	isSignedIn: false
 }
 
-// TODO: Add isSignedIn and isSignedInFailed
 export const updateAppStatus = (state = initialAppState, action = {}) => {
 	switch (action.type) {
 		case SIGNIN_REQUEST_PENDING:
