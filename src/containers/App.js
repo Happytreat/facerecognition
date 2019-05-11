@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import { Route, Redirect, withRouter, Switch } from "react-router-dom"
 import Particles from "react-particles-js"
 import Navigation from "../components/Navigation/Navigation"
 import Form from "../components/Form/Form"
@@ -10,10 +11,6 @@ import Loader from "react-loader-spinner"
 import ParticleOptions from "./Particle"
 import { connect } from "react-redux"
 import "./App.css"
-
-const initialState = {
-	route: "signin"
-}
 
 const mapStateToProps = state => {
 	return {
@@ -33,70 +30,96 @@ const mapDispatchToProps = dispatch => {
 class App extends Component {
 	constructor() {
 		super()
-		this.state = initialState
+		this.routeChange = this.routeChange.bind(this)
 	}
 
-	onRouteChange = route => {
-		if (route === "signout") {
+	routeChange(route) {
+		let path = `/`
+		if (route === "register") {
+			path = `/register`
+		} else if (route === "home") {
+			path = `/dashboard`
+		} else if (route === "signout") {
+			path = `/`
 			this.props.onSignOut()
 			this.props.onClearInput()
 			this.props.onClearUsers()
-			this.setState({ route: "signin" })
-		} else if (route === "home") {
-			this.setState({ route: route })
-		} else {
-			this.setState({ route: route })
 		}
+		this.props.history.push(path)
 	}
 
 	render() {
-		const { route } = this.state
+		//const { route } = this.state
 		const { isPending, isSignedIn } = this.props
 		return (
 			<div className='App'>
 				<Particles className='particles' params={ParticleOptions} />
-				<Navigation onRouteChange={this.onRouteChange} isSignedIn={isSignedIn} />
+				<Navigation onRouteChange={this.routeChange} isSignedIn={isSignedIn} />
 				{isPending ? (
 					<div className='centered'>
 						<Loader type='Hearts' color='#FFF340' height={100} width={100} />
 					</div>
-				) : route === "home" ? (
-					<div>
-						<Dashboard />
-					</div>
-				) : route === "signin" ? (
-					<Signin
-						onRouteChange={this.onRouteChange}
-						render={({ title, inputLabels, inputMethods, buttonLabels, buttonMethods }) => (
-							<Form
-								title={title}
-								inputLabels={inputLabels}
-								inputMethods={inputMethods}
-								buttonLabels={buttonLabels}
-								buttonMethods={buttonMethods}
-							/>
-						)}
-					/>
 				) : (
-					<Register
-						onRouteChange={this.onRouteChange}
-						render={({ title, inputLabels, inputMethods, buttonLabels, buttonMethods }) => (
-							<Form
-								title={title}
-								inputLabels={inputLabels}
-								inputMethods={inputMethods}
-								buttonLabels={buttonLabels}
-								buttonMethods={buttonMethods}
-							/>
-						)}
-					/>
+					<Switch>
+						<Route
+							exact
+							path='/'
+							render={() =>
+								isSignedIn ? (
+									<Redirect to='/dashboard' />
+								) : (
+									<Signin
+										onRouteChange={this.routeChange}
+										render={({ title, inputLabels, inputMethods, buttonLabels, buttonMethods }) => (
+											<Form
+												title={title}
+												inputLabels={inputLabels}
+												inputMethods={inputMethods}
+												buttonLabels={buttonLabels}
+												buttonMethods={buttonMethods}
+											/>
+										)}
+									/>
+								)
+							}
+						/>
+						<Route
+							exact
+							path='/dashboard'
+							render={() => (!isSignedIn ? <Redirect to='/' /> : <Dashboard />)}
+						/>
+						<Route
+							exact
+							path='/register'
+							render={() =>
+								isSignedIn ? (
+									<Redirect to='/dashboard' />
+								) : (
+									<Register
+										onRouteChange={this.routeChange}
+										render={({ title, inputLabels, inputMethods, buttonLabels, buttonMethods }) => (
+											<Form
+												title={title}
+												inputLabels={inputLabels}
+												inputMethods={inputMethods}
+												buttonLabels={buttonLabels}
+												buttonMethods={buttonMethods}
+											/>
+										)}
+									/>
+								)
+							}
+						/>
+					</Switch>
 				)}
 			</div>
 		)
 	}
 }
 
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(App)
+export default withRouter(
+	connect(
+		mapStateToProps,
+		mapDispatchToProps
+	)(App)
+)
