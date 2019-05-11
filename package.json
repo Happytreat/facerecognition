@@ -9,6 +9,7 @@
     "react-loader-spinner": "^2.3.0",
     "react-particles-js": "^2.6.0",
     "react-redux": "^7.0.3",
+    "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.0",
     "react-tilt": "^0.1.4",
     "redux": "^4.0.1",

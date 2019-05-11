@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import { BrowserRouter, Route, Redirect } from "react-router-dom"
 import Particles from "react-particles-js"
 import Navigation from "../components/Navigation/Navigation"
 import Form from "../components/Form/Form"
@@ -50,7 +51,7 @@ class App extends Component {
 	}
 
 	render() {
-		const { route } = this.state
+		//const { route } = this.state
 		const { isPending, isSignedIn } = this.props
 		return (
 			<div className='App'>
@@ -60,36 +61,58 @@ class App extends Component {
 					<div className='centered'>
 						<Loader type='Hearts' color='#FFF340' height={100} width={100} />
 					</div>
-				) : route === "home" ? (
-					<div>
-						<Dashboard />
-					</div>
-				) : route === "signin" ? (
-					<Signin
-						onRouteChange={this.onRouteChange}
-						render={({ title, inputLabels, inputMethods, buttonLabels, buttonMethods }) => (
-							<Form
-								title={title}
-								inputLabels={inputLabels}
-								inputMethods={inputMethods}
-								buttonLabels={buttonLabels}
-								buttonMethods={buttonMethods}
-							/>
-						)}
-					/>
 				) : (
-					<Register
-						onRouteChange={this.onRouteChange}
-						render={({ title, inputLabels, inputMethods, buttonLabels, buttonMethods }) => (
-							<Form
-								title={title}
-								inputLabels={inputLabels}
-								inputMethods={inputMethods}
-								buttonLabels={buttonLabels}
-								buttonMethods={buttonMethods}
-							/>
-						)}
-					/>
+					<BrowserRouter>
+						<Route
+							exact
+							path='/'
+							render={() =>
+								isSignedIn ? (
+									<Redirect to='/dashboard' />
+								) : (
+									<Signin
+										onRouteChange={this.onRouteChange}
+										render={({ title, inputLabels, inputMethods, buttonLabels, buttonMethods }) => (
+											<Form
+												title={title}
+												inputLabels={inputLabels}
+												inputMethods={inputMethods}
+												buttonLabels={buttonLabels}
+												buttonMethods={buttonMethods}
+											/>
+										)}
+									/>
+								)
+							}
+						/>
+						<Route
+							exact
+							path='/dashboard'
+							render={() => (!isSignedIn ? <Redirect to='/' /> : <Dashboard />)}
+						/>
+						<Route
+							exact
+							path='/register'
+							render={() =>
+								isSignedIn ? (
+									<Redirect to='/dashboard' />
+								) : (
+									<Register
+										onRouteChange={this.onRouteChange}
+										render={({ title, inputLabels, inputMethods, buttonLabels, buttonMethods }) => (
+											<Form
+												title={title}
+												inputLabels={inputLabels}
+												inputMethods={inputMethods}
+												buttonLabels={buttonLabels}
+												buttonMethods={buttonMethods}
+											/>
+										)}
+									/>
+								)
+							}
+						/>
+					</BrowserRouter>
 				)}
 			</div>
 		)
@@ -100,3 +123,52 @@ export default connect(
 	mapStateToProps,
 	mapDispatchToProps
 )(App)
+
+/* <React.Fragment>
+							<Route
+								exact
+								path='/'
+								render={() =>
+									isSignedIn ? (
+										<Redirect to='/dashboard' />
+									) : (
+										<Signin
+											onRouteChange={this.onRouteChange}
+											render={({
+												title,
+												inputLabels,
+												inputMethods,
+												buttonLabels,
+												buttonMethods
+											}) => (
+												<Form
+													title={title}
+													inputLabels={inputLabels}
+													inputMethods={inputMethods}
+													buttonLabels={buttonLabels}
+													buttonMethods={buttonMethods}
+												/>
+											)}
+										/>
+									)
+								}
+							/>
+							<Route
+								exact
+								path='/register'
+								render={() => {
+									<Register
+										onRouteChange={this.onRouteChange}
+										render={({ title, inputLabels, inputMethods, buttonLabels, buttonMethods }) => (
+											<Form
+												title={title}
+												inputLabels={inputLabels}
+												inputMethods={inputMethods}
+												buttonLabels={buttonLabels}
+												buttonMethods={buttonMethods}
+											/>
+										)}
+									/>
+								}}
+							/>
+						</React.Fragment> */
