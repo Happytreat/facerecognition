@@ -12,10 +12,6 @@ import ParticleOptions from "./Particle"
 import { connect } from "react-redux"
 import "./App.css"
 
-const initialState = {
-	route: "signin"
-}
-
 const mapStateToProps = state => {
 	return {
 		isPending: state.updateAppStatus.isPending,
@@ -34,7 +30,6 @@ const mapDispatchToProps = dispatch => {
 class App extends Component {
 	constructor() {
 		super()
-		this.state = initialState
 		this.routeChange = this.routeChange.bind(this)
 	}
 
@@ -44,21 +39,13 @@ class App extends Component {
 			path = `/register`
 		} else if (route === "home") {
 			path = `/dashboard`
-		}
-		this.props.history.push(path)
-	}
-
-	onRouteChange = route => {
-		if (route === "signout") {
+		} else if (route === "signout") {
+			path = `/`
 			this.props.onSignOut()
 			this.props.onClearInput()
 			this.props.onClearUsers()
-			this.setState({ route: "signin" })
-		} else if (route === "home") {
-			this.setState({ route: route })
-		} else {
-			this.setState({ route: route })
 		}
+		this.props.history.push(path)
 	}
 
 	render() {
@@ -67,7 +54,7 @@ class App extends Component {
 		return (
 			<div className='App'>
 				<Particles className='particles' params={ParticleOptions} />
-				<Navigation onRouteChange={this.onRouteChange} isSignedIn={isSignedIn} />
+				<Navigation onRouteChange={this.routeChange} isSignedIn={isSignedIn} />
 				{isPending ? (
 					<div className='centered'>
 						<Loader type='Hearts' color='#FFF340' height={100} width={100} />
